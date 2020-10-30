@@ -1,3 +1,4 @@
+import { select } from '@ngrx/store';
 import { Project } from './../../projects/project.model';
 
 // if we don't use NgRx, the initialProjects is setup in the project component
@@ -50,11 +51,33 @@ export const initialState: ProjectsState = {
 
 // 03. build the most simplest reducer [reducer just a function with two parameters - 'state' and 'action']
 // when to call 'reducer', it has an 'application state' and an 'action object: defined what just happened, the type of action'
-// it takes a state and return a state
+// it takes a state and return a new state [reducer is immutable]
 // [reducer is how we are going to control the access of the store]
-export function projectReducers (state = initialState, action): ProjectsState {
+export function projectsReducers (state = initialState, action): ProjectsState {
   // if there is not a match on the 'action.type', then it will pass and return the initial state
   switch(action.type) {
+    // capture the action type, then delegate to a stand alone function - [testable later]
+    // then return a new state object
+    case 'create':
+      return {
+         selectedProjectId: state.selectedProjectId,
+         projects: createProject(state.projects, action.payload)
+      }
+    case 'update':
+      return {
+        selectedProjectId: state.selectedProjectId,
+        projects: updateProject(state.projects, action.payload)
+      }
+    case 'delete':
+      return {
+        selectedProjectId: state.selectedProjectId,
+        projects: deleteProject(state.projects, action.payload)
+      }
+    case 'select':
+      return {
+        selectedProjectId: action.payload,
+        projects: state.projects
+      }
     default:
       return state;
   }

@@ -85,12 +85,18 @@ export class ProjectsComponent implements OnInit {
   }
 
   createProject(project) {
-    this.projectsService.create(project)
-      .subscribe(response => {
+    this.store.dispatch({type: 'create', payload: project});
         this.ns.emit('Project created!');
         this.getProjects();
         this.resetCurrentProject();
-      });
+
+        
+    // this.projectsService.create(project)
+    //   .subscribe(response => {
+    //     this.ns.emit('Project created!');
+    //     this.getProjects();
+    //     this.resetCurrentProject();
+    //   });
   }
 
   updateProject(project) {

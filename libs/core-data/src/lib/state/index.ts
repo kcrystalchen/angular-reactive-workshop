@@ -17,7 +17,7 @@ export interface AppState {
 // step 3: Added all the feature reducers and combined them to the Top Level Reducer
 export const reducers: ActionReducerMap<AppState> = {
   customers: fromCustomers.customersReducer,
-  projects: fromProjects.projectReducers
+  projects: fromProjects.projectsReducers
 };
 
 
