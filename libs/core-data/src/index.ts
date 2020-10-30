@@ -7,3 +7,11 @@ export { Customer } from './lib/customers/customer.model';
 export { Project } from './lib/projects/project.model';
 export { ProjectsService } from './lib/projects/projects.service';
 export { CustomersFacade } from './lib/state/customers/customers.facade';
+
+// tips: when we get to facades, we are gonna bypass all of that [currently we need to export the states]
+
+
+// export the states, then consume them into the application [could be modules, projects]  - Expose projects state
+export { ProjectsState } from './lib/state/projects/projects.reducer';
+
+
