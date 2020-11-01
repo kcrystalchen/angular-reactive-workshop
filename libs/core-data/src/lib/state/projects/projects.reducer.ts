@@ -1,4 +1,3 @@
-import { select } from '@ngrx/store';
 import { Project } from './../../projects/project.model';
 
 // if we don't use NgRx, the initialProjects is setup in the project component
@@ -30,10 +29,13 @@ const initialProjects: Project[] = [
   }
 ];
 
+// create, update, delete methods
 const createProject = (projects, project) => [...projects, project];
+
 const updateProject = (projects, project) => projects.map(p => {
   return p.id === project.id ? Object.assign({}, project) : p;
 });
+
 const deleteProject = (projects, project) => projects.filter(w => project.id !== w.id);
 
 
@@ -48,6 +50,7 @@ export const initialState: ProjectsState = {
   projects: initialProjects, // hard code the initial project data
   selectedProjectId: null // initial projectId is null
 }
+
 
 // 03. build the most simplest reducer [reducer just a function with two parameters - 'state' and 'action']
 // when to call 'reducer', it has an 'application state' and an 'action object: defined what just happened, the type of action'
@@ -78,6 +81,7 @@ export function projectsReducers (state = initialState, action): ProjectsState {
         selectedProjectId: action.payload,
         projects: state.projects
       }
+    // default is returning the default state
     default:
       return state;
   }

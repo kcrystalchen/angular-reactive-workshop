@@ -85,12 +85,15 @@ export class ProjectsComponent implements OnInit {
   }
 
   createProject(project) {
+    // this.store.dispatch(actionObject has two properties
+    // => {action.type, action.payload} )
     this.store.dispatch({type: 'create', payload: project});
-        this.ns.emit('Project created!');
-        this.getProjects();
-        this.resetCurrentProject();
 
-        
+    this.ns.emit('Project created!');
+    this.getProjects();
+    this.resetCurrentProject();
+
+    // Before using NgRx:
     // this.projectsService.create(project)
     //   .subscribe(response => {
     //     this.ns.emit('Project created!');
@@ -100,21 +103,32 @@ export class ProjectsComponent implements OnInit {
   }
 
   updateProject(project) {
-    this.projectsService.update(project)
-      .subscribe(response => {
-        this.ns.emit('Project saved!');
-        this.getProjects();
-        this.resetCurrentProject();
-      });
+    this.store.dispatch({type: 'update', payload: project});
+    this.ns.emit('Project saved!');
+    this.getProjects();
+    this.resetCurrentProject();
+
+    // this.projectsService.update(project)
+    //   .subscribe(response => {
+    //     this.ns.emit('Project saved!');
+    //     this.getProjects();
+    //     this.resetCurrentProject();
+    //   });
   }
 
   deleteProject(project) {
-    this.projectsService.delete(project)
-      .subscribe(response => {
-        this.ns.emit('Project deleted!');
-        this.getProjects();
-        this.resetCurrentProject();
-      });
+    this.store.dispatch({type: 'delete', payload: project});
+
+    this.ns.emit('Project deleted!');
+    this.getProjects();
+    this.resetCurrentProject();
+
+    // this.projectsService.delete(project)
+    //   .subscribe(response => {
+    //     this.ns.emit('Project deleted!');
+    //     this.getProjects();
+    //     this.resetCurrentProject();
+    //   });
   }
 }
 
