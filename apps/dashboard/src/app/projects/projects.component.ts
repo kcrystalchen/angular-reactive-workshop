@@ -2,7 +2,7 @@ import { map } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { Customer, Project, ProjectsService, NotificationsService, CustomersService, ProjectsState, AddProject, UpdateProject, DeleteProject } from '@workshop/core-data';
+import { Customer, Project, ProjectsService, NotificationsService, CustomersService, ProjectsState, AddProject, UpdateProject, DeleteProject, LoadProjects, initialProjects } from '@workshop/core-data';
 
 const emptyProject: Project = {
   id: null,
@@ -30,7 +30,9 @@ export class ProjectsComponent implements OnInit {
     private ns: NotificationsService) {
       this.projects$ = store.pipe(
         select('projects'),
-        map((projectsState: ProjectsState) => projectsState.projects)
+        map(project => project.entities),
+        map(project => Object.keys(project).map(k => project[k]))
+        // map((projectsState: ProjectsState) => projectsState.projects)
       )
     }
 
@@ -40,32 +42,9 @@ export class ProjectsComponent implements OnInit {
     this.resetCurrentProject();
   }
 
-  resetCurrentProject() {
-    this.currentProject = emptyProject;
-  }
-
-  selectProject(project) {
-    this.currentProject = project;
-  }
-
-  cancel(project) {
-    this.resetCurrentProject();
-  }
-
-  getCustomers() {
-    this.customers$ = this.customerService.all();
-  }
-
   getProjects() {
-    // this.projects$ = this.projectsService.all();
-  }
-
-  saveProject(project) {
-    if (!project.id) {
-      this.createProject(project);
-    } else {
-      this.updateProject(project);
-    }
+    this.store.dispatch(new LoadProjects(initialProjects))
+     // this.projects$ = this.projectsService.all();
   }
 
   createProject(project) {
@@ -89,5 +68,33 @@ export class ProjectsComponent implements OnInit {
     this.ns.emit('Project deleted!');
     this.resetCurrentProject();
   }
+
+  resetCurrentProject() {
+    this.currentProject = emptyProject;
+  }
+
+  selectProject(project) {
+    this.currentProject = project;
+  }
+
+  cancel(project) {
+    this.resetCurrentProject();
+  }
+
+  getCustomers() {
+    this.customers$ = this.customerService.all();
+  }
+
+
+  saveProject(project) {
+    if (!project.id) {
+      this.createProject(project);
+    } else {
+      this.updateProject(project);
+    }
+  }
+
+
+
 }
 
