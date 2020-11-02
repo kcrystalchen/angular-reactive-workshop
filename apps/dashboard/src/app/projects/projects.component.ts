@@ -1,3 +1,4 @@
+import { AddProject, UpdateProject, DeleteProject } from './../../../../../libs/core-data/src/lib/state/projects/projects.actions';
 import { Project } from './../../../../../libs/core-data/src/lib/projects/project.model';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -89,46 +90,26 @@ export class ProjectsComponent implements OnInit {
     // => {action.type, action.payload} )
     this.store.dispatch({type: 'create', payload: project});
 
+    this.store.dispatch(new AddProject(project));
     this.ns.emit('Project created!');
     this.getProjects();
     this.resetCurrentProject();
-
-    // Before using NgRx:
-    // this.projectsService.create(project)
-    //   .subscribe(response => {
-    //     this.ns.emit('Project created!');
-    //     this.getProjects();
-    //     this.resetCurrentProject();
-    //   });
   }
 
   updateProject(project) {
     this.store.dispatch({type: 'update', payload: project});
+    this.store.dispatch(new UpdateProject(project));
     this.ns.emit('Project saved!');
     this.getProjects();
     this.resetCurrentProject();
-
-    // this.projectsService.update(project)
-    //   .subscribe(response => {
-    //     this.ns.emit('Project saved!');
-    //     this.getProjects();
-    //     this.resetCurrentProject();
-    //   });
   }
 
   deleteProject(project) {
     this.store.dispatch({type: 'delete', payload: project});
-
+    this.store.dispatch(new DeleteProject(project))
     this.ns.emit('Project deleted!');
     this.getProjects();
     this.resetCurrentProject();
-
-    // this.projectsService.delete(project)
-    //   .subscribe(response => {
-    //     this.ns.emit('Project deleted!');
-    //     this.getProjects();
-    //     this.resetCurrentProject();
-    //   });
   }
 }
 

@@ -14,4 +14,8 @@ export { CustomersFacade } from './lib/state/customers/customers.facade';
 // export the states, then consume them into the application [could be modules, projects]  - Expose projects state
 export { ProjectsState } from './lib/state/projects/projects.reducer';
 
+// step 4 from projects.actions.ts
+//  export the project.actions.ts because it will be need expose them to inside the application
+export {SelectProject, AddProject, UpdateProject, DeleteProject} from './lib/state/projects/projects.actions'
+
 

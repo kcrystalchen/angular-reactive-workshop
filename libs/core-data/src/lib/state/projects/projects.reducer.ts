@@ -1,3 +1,4 @@
+import { ProjectsActionTypes } from './projects.actions';
 import { Project } from './../../projects/project.model';
 
 // if we don't use NgRx, the initialProjects is setup in the project component
@@ -61,22 +62,22 @@ export function projectsReducers (state = initialState, action): ProjectsState {
   switch(action.type) {
     // capture the action type, then delegate to a stand alone function - [testable later]
     // then return a new state object
-    case 'create':
+    case ProjectsActionTypes.AddProject:
       return {
          selectedProjectId: state.selectedProjectId,
          projects: createProject(state.projects, action.payload)
       }
-    case 'update':
+    case ProjectsActionTypes.UpdateProject:
       return {
         selectedProjectId: state.selectedProjectId,
         projects: updateProject(state.projects, action.payload)
       }
-    case 'delete':
+    case ProjectsActionTypes.DeleteProject:
       return {
         selectedProjectId: state.selectedProjectId,
         projects: deleteProject(state.projects, action.payload)
       }
-    case 'select':
+    case ProjectsActionTypes.projectSelected:
       return {
         selectedProjectId: action.payload,
         projects: state.projects
