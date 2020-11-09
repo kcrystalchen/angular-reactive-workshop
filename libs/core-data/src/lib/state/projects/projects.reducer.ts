@@ -2,7 +2,7 @@ import { ProjectsActionTypes } from './projects.actions';
 import { Project } from './../../projects/project.model';
 
 // if we don't use NgRx, the initialProjects is setup in the project component
-// Because it is using NgRx, so the initialProject will be
+// Because it is using NgRx, so the initialProject will be here
 const initialProjects: Project[] = [
   {
     id: '1',
