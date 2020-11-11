@@ -54,10 +54,11 @@ export class ProjectsComponent implements OnInit {
 
   getCustomers() {
     this.customers$ = this.customerService.all();
+    console.log('customers check: ', this.customers$);
   }
 
   getProjects() {
-    // this.projects$ = this.projectsService.all();
+    this.projects$ = this.projectsService.all();
   }
 
   saveProject(project) {
